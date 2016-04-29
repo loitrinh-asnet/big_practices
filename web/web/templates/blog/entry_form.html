@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}
+Create Blog
+{% endblock %}
+
+{% block content %}
+
+<div id="message">
+Create/update the blog
+</div>
+
+<div id="columnA_2columns">
+<form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save" />
+</form>
+</div>
+
+{% endblock %}

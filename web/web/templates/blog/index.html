@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load static %}{% load i18n %}
+{% block title %}Blog{% endblock %}
+
+{% block content%}
+<!--BLOG POST STARTS-->
+{% for entry in entries %}
+    {% include 'blog/entry_snippets.html' %}
+{% endfor %}
+
+<!--BLOG POST ENDS-->
+<div class="clear"></div>
+{% include 'blog/pagination.html' with page=page_obj%}
+{% endblock %}

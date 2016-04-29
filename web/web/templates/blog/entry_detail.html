@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+<!-- {% block title %}
+    {{entry.title}}
+{% endblock %} -->
+
+{% block content %}
+  {% with 'True' as entry_details %}
+    {% include 'blog/entry_snippets.html' %}
+  {% endwith %}
+
+<div class="clear"></div>
+
+{% if comments %}
+  <!--COMMENT BLOCK STARTS-->
+  <h2 style="clear:both;">Comments</h2>
+  {% for comment in comments %}
+      <a name="comment-{{ comment.pk }}">
+      <div id="comments" class="commentor_block">
+        <div class="leftnpanel">
+            <span class="commentor">
+               {% if comment.user_url %}
+                   <a href='{{ comment.user_url }}' rel='nofollow' target='_blank'>{{ comment.user_name }}</a>
+               {% else %}
+                   {{ comment.user_name }}
+               {% endif %}
+            </span>
+              <span class="postdate">
+                  <a href="#comment-{{ comment.pk }}">{{ comment.created_date|date:'jS N, Y' }}</a>
+              </span><br/>
+            <div class="comment_post">
+                <p>{{ comment.text|striptags|urlize|linebreaks }}</p>
+            </div>
+        </div>
+        <div class="rightnpanel">
+            <!-- <img src="" width="50" height="50" alt="commmenttor" class="picborder"/> -->
+            <img src="{{ comment.create_by.profile.profile_image_url }}" width="71" height="72"/>
+        </div>
+        <div class="clear"></div>
+      </div>
+  {% endfor %}
+  <!--COMMENT BLOCK ENDS-->
+{% endif %}
+
+<div class="clear"></div>
+
+<!--COMMENT FORM BLOCK STARTS-->
+<div class="general_block">
+    {% if entry.is_comments_allowed %}
+        <form action="." method="post">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Post a comment</legend>
+                Name : {{comment_form.name.errors}}<br/> {{comment_form.name}} <br/>
+                Email : {{comment_form.email.errors}} <br/> {{comment_form.email}} <br/>
+                Your site url: {{comment_form.url.errors}} <br/> {{comment_form.url}} <br/>
+                Comment : {{comment_form.text.errors}} <br/> {{comment_form.text}} <br/>
+                <input name="button" type="submit"  id="button" value="Comment"  class="but_right"/>
+          </fieldset>
+      </form>
+    {% else %}
+        <div class="message">Comments are disabled.</div>
+    {% endif %}
+</div>
+<!--COMMENT FORM BLOCK ENDS-->
+
+
+{% endblock %}

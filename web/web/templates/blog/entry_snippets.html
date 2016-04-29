@@ -1,0 +1,38 @@
+
+<div class="comment_block">
+  <div class="left_panel">
+    <div class="frame_bg">
+        <img src="{{ entry.created_by.user.profile.profile_image_url }}" width="71" height="72"/>
+<!--         {% if entry.created_by.teammember.photo %}
+            <img src="{{ entry.created_by.teammember.photo.url }}" width="71" height="72" alt="{{ entry.created_by }}" />
+        {% else %}
+            <img src="{{ STATIC_URL }}blogango/images/person_default.jpg" width="71" height="72" alt="{{ entry.created_by }}" />
+        {% endif %} -->
+    </div>
+    <div class="italics">
+        {{ entry.created_date|date:'jS N, Y' }}
+    </div>
+    <div class="comment_bg">
+        <a href="">{{ entry.get_number_comments }}</a>
+    </div>
+    <div class="italics">Comments</div>
+  </div>
+
+  <div class="right_panel">
+    <a href='{{ entry.get_absolute_url }}' class="noline">
+      <h1 class="post_title">{{ entry.title }}</h1>
+    </a>
+    <h6 class="posted_by">
+      By :
+      <a href="{% url 'blog:author' entry.created_by %}">{{ entry.created_by }}</a>
+    </h6>
+    {% if entry_details %}
+      <p>{{ entry.text|safe }}</p>
+    {% else %}
+      <p>{{ entry.text|truncatewords_html:100|safe }} </p>
+    {% endif %}
+    {% if not entry_details %}
+    <a href="{{ entry.get_absolute_url }}" class="moreinfo">more info..</a>
+    {% endif %}
+  </div>
+</div>

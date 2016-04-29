@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}
+Blog Detail
+{% endblock %}
+
+{% block content %}
+<h1>Blog Details</h1>
+<a href="{% url 'blog:blog_update' pk=object.id %}" >update</a>
+<p>Title: {{ object.title }}</p>
+<p>Tag line: {{ object.tag_line }}</p>
+<p>entries_per_page: {{ object.entries_per_page }}</p>
+<p>recents: {{ object.recents }}</p>
+{% endblock %}

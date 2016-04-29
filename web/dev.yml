@@ -1,0 +1,33 @@
+version: '2'
+services:
+  postgres:
+    build: ./compose/postgres
+    # volumes:
+      # If you are using boot2docker, postgres data has to live in the VM for now until #581 is fixed
+      # for more info see here: https://github.com/boot2docker/boot2docker/issues/581
+      # - /data/dev/web/postgres:/var/lib/postgresql/data
+      # - /data/dev/web/postgres-backups:/backups
+    environment:
+      - POSTGRES_USER=web
+
+  elasticsearch:
+    build: ./compose/elasticsearch
+    ports:
+      - "9200:9200"
+
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile-dev
+    command: python /app/manage.py runserver_plus 0.0.0.0:8000
+    depends_on:
+      - postgres
+      - elasticsearch
+    environment:
+      - POSTGRES_USER=web
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    links:
+      - postgres

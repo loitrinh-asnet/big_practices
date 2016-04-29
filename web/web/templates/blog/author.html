@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}
+Author - {{ author }}
+{% endblock %}
+
+{% block content %}
+  {% for entry in entries %}
+    {% include 'blog/entry_snippets.html' %}
+  {% empty %}
+  <div class="leftblock">
+    <h1>No Posts by this author</h1>
+    <div>
+      <p>
+        <br/>
+        {{ author }}  has not published any entries yet.
+      </p>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="clear"></div>
+
+  {% if page_obj.has_next or page_obj.has_previous %}
+    <div class="pagination">
+      <div class="moreinfo">
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Previous</a>
+        {% endif %}
+
+        {% if page_obj.has_previous %}
+          <span class="right">
+            <a href="?page={{ page_obj.previous_page_number }}">Next</a>
+          </span>
+        {% endif %}
+
+      </div>
+    </div>
+  {% endif %}
+{% endblock %}

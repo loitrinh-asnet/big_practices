@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{block.super}} - Install
+{% endblock %}
+
+{% block content %}
+<div class="leftblock">
+    <h1>Blog not created </h1>
+
+<div class="postcontent">
+    <p>Create a blog at <a href="{% url 'blog:blog_create' %}">HERE</a></p>
+</div>
+
+</div>
+
+{% endblock %}
